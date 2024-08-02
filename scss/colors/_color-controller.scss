@@ -1,0 +1,41 @@
+
+// _color-controller.scss
+
+$colors: (
+  "giallo": #fbb03b,
+  "rosso": #EC4040,
+  "verde": #56ca71,
+  "arancione": #ff6552,
+  "azzurro": #67a1ff,
+  "azzurro-chiaro": #c5ebff,
+  "viola": #8d80ff,
+  "acqua": #44cdd0,
+  "turchese": #02B399,
+  "rosa": #ffbfbe,
+  "nero": #12131D,
+  "bianco": #fef4f2,
+  "bianco-puro": #ffffff,
+  "nero-puro": #000000,
+  "gradient": linear-gradient(to bottom, #000, #22092C, #000),
+  "gradient-2": linear-gradient(to bottom, #000, #22092C)
+) !global;
+
+@function get-color($color-name) {
+  @return map-get($colors, $color-name);
+}
+
+$giallo: get-color("giallo");
+$rosso: get-color("rosso");
+$verde: get-color("verde");
+$arancione: get-color("arancione");
+$azzurro: get-color("azzurro");
+$azzurro-chiaro: get-color("azzurro-chiaro");
+$viola: get-color("viola");
+$acqua: get-color("acqua");
+$turchese: get-color("turchese");
+$rosa: get-color("rosa");
+$nero: get-color("nero");
+$bianco: get-color("bianco");
+$bianco-puro: get-color("bianco-puro");
+$gradient: get-color("gradient");
+$gradient-2: get-color("gradient-2");

@@ -1,0 +1,110 @@
+
+// ========================================
+// _typo-scale-logic.scss
+// ========================================
+
+
+// ====== Pow function
+
+@function pow($base, $exponent) {
+  $result: 1;
+  // Management of positive exponents
+  @if $exponent > 0 {
+    @for $i from 1 through $exponent {
+      $result: $result * $base;
+    }
+  }
+  // Management of negative exponents
+  @else if $exponent < 0 {
+    @for $i from 1 through abs($exponent) {
+      $result: $result / $base;
+    }
+  }
+  // $exponent == 0 always returns 1 for any base
+  @return $result;
+}
+
+
+// ====== Mixin to generate responsive font sizes
+
+@mixin generateResponsiveBaseFontSize {
+  $baseSize: map-get(map-get($settings, 'responsiveBaseFontSize'), 'baseSize');
+  $incrementFactor: map-get(map-get($settings, 'responsiveBaseFontSize'), 'incrementFactor');
+
+  html {
+    font-size: #{$baseSize}px; // root font size
+  }
+
+  // Calculates and applies the font size for each breakpoint
+  @each $key, $value in $breakpoints {
+    $index: index(map-keys($breakpoints), $key) - 1; // Calculates the correct index for the first breakpoint
+    $size: $baseSize * pow($incrementFactor, $index + 1); // Calculate new font size
+    $size: round($size * 100) / 100; // Rounding to two decimal places
+
+    @media (min-width: $value) {
+      html {
+        font-size: #{$size}px; // Apply the calculated dimension
+      }
+    }
+  }
+}
+
+@include generateResponsiveBaseFontSize;
+
+
+// ====== Function to generate the typographical scale
+
+@function generateTypographicScale($baseFontSize, $ratio, $scaleNamesAboveBase, $scaleNamesBelowBase, $count) {
+  $scale: ();
+
+  // Generate sizes above the base
+  @for $i from 0 through $count {
+    $size: $baseFontSize * pow($ratio, $i);
+    $size: round($size * 100) / 100;
+    $scale-name: if($i < length($scaleNamesAboveBase), nth($scaleNamesAboveBase, $i + 1), 'scale-' + $i + 1);
+    $scale: map-merge($scale, ($scale-name: $size));
+  }
+
+  // Generate sizes below the base
+  @for $i from 1 through length($scaleNamesBelowBase) {
+    $size: $baseFontSize / pow($ratio, $i);
+    $size: round($size * 100) / 100;
+    $scale-name: nth($scaleNamesBelowBase, length($scaleNamesBelowBase) - $i + 1);
+    $scale: map-merge($scale, ($scale-name: $size));
+  }
+
+  @return $scale;
+}
+
+// Generate custom font scale
+$custom-font-scale: generateTypographicScale(
+  1rem,
+  map-get($customFontSizeScale, 'r'),
+  map-get($settings, 'scaleNamesAboveBase'),
+  map-get($settings, 'scaleNamesBelowBase'),
+  map-get($customFontSizeScale, 'count')
+);
+
+// ====== Mixins to create classes
+
+// Mixin to create typography classes
+@mixin createTypographyClasses {
+  @each $name, $size in $custom-font-scale {
+    .text-#{$name} {
+      font-size: $size;
+    }
+  }
+
+  // Mixin to create responsive typography classes
+  @each $breakpoint, $breakpoint-size in $breakpoints {
+    @media (min-width: $breakpoint-size) {
+      @each $name, $size in $custom-font-scale {
+        .text-#{$breakpoint}-#{$name} {
+          font-size: $size;
+        }
+      }
+    }
+  }
+}
+
+@include createTypographyClasses;

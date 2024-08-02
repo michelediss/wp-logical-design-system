@@ -1,0 +1,45 @@
+
+// ========================================
+// _typo-scale-controller.scss
+// ========================================
+
+// ====== input parameters
+
+$responsiveBaseFontSize: (
+  baseSize: 17,
+  incrementFactor: 0.99
+);
+
+$customFontSizeScale: (
+  f0: 1,
+  r: 1.25,
+  count: 10
+);
+
+// ====== font size intervals
+
+$scale-names-above-base: (
+  'base', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl', '8xl', '9xl'
+) !global;
+
+$scale-names-below-base: (
+  'xs', 'sm'
+) !global;
+
+// ====== breakpoints
+
+$breakpoints: (
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px
+) !global;
+
+// ====== global map containing all sub-maps
+
+$settings: (
+  responsiveBaseFontSize: $responsiveBaseFontSize,
+  customFontSizeScale: $customFontSizeScale,
+  scaleNamesAboveBase: $scale-names-above-base,
+  scaleNamesBelowBase: $scale-names-below-base
+) !global;
