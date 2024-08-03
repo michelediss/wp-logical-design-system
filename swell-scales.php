@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Swell Scales
-Description: Compila SCSS in CSS per il tema WordPress.
+Plugin Name: Swell Scales for WordPress
+Description: Enhance your Tailwind CSS projects with a typographic scales generator, font pairing system, and color palette creator. 
 Version: 1.0
-Author: Il Tuo Nome
+Author: Michele Paolino
 */
 
 require 'libs/scssphp/scss.inc.php';
@@ -13,10 +13,8 @@ use ScssPhp\ScssPhp\Compiler;
 function swell_scales_compile_scss() {
     $scss = new Compiler();
 
-    // Imposta i percorsi di importazione SCSS
     $scss->setImportPaths( plugin_dir_path( __FILE__ ) . 'scss/' );
 
-    // Leggi il contenuto di main.scss
     $scss_content = file_get_contents( plugin_dir_path( __FILE__ ) . 'scss/main.scss' );
 
     if ($scss_content === false) {
@@ -24,12 +22,10 @@ function swell_scales_compile_scss() {
         return;
     }
 
-    // Compila in CSS
     try {
         $compiled_css = $scss->compile($scss_content);
         file_put_contents( plugin_dir_path( __FILE__ ) . 'output-css/style.css', $compiled_css );
 
-        // Compila e minimizza in CSS
         $scss->setFormatter('ScssPhp\ScssPhp\Formatter\Compressed');
         $minified_css = $scss->compile($scss_content);
         file_put_contents( plugin_dir_path( __FILE__ ) . 'output-css/style.min.css', $minified_css );
