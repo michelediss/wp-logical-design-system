@@ -35,10 +35,8 @@ function swell_scales_compile_scss() {
 }
 
 function swell_scales_enqueue_styles() {
-    $css_path = plugin_dir_url( __FILE__ ) . 'output-css/style.css';
     $min_css_path = plugin_dir_url( __FILE__ ) . 'output-css/style.min.css';
 
-    wp_enqueue_style( 'swell-scales-styles', $css_path );
     wp_enqueue_style( 'swell-scales-styles-min', $min_css_path );
 }
 add_action( 'wp_enqueue_scripts', 'swell_scales_enqueue_styles' );
