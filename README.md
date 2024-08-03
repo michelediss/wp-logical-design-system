@@ -60,7 +60,7 @@ Import the selected font pair in  *custom.scss*
 
 ### 4. Automatic SCSS Compilation
 
-Swell Scales automatically compiles SCSS files and enqueues the resulting style.min.css in the output directoty. This ensures that your styles are up-to-date without requiring manual compilation.
+Swell Scales automatically compiles SCSS files using **scssphp libraty** and enqueues the resulting style.min.css in the output directoty. This ensures that your styles are up-to-date without requiring manual compilation.
 
 ### 5. Custom SCSS
 You can add your own custom SCSS code by placing it in the custom.scss file within the plugin directory. This allows you to extend or override the default styles provided by Swell Scales.
@@ -74,9 +74,9 @@ Activate the plugin through the 'Plugins' menu in WordPress.
 
 For advanced customization, you can modify the plugin's SCSS files directly:
 
-_typo-scale-logic.scss: Adjust the logic for generating responsive typographic scales.
-_color-logic.scss: Manage global color variables and generate color utility classes.
-custom.scss: Add your custom SCSS code to further customize styles.
+- **_typo-scale-logic.scss:** Adjust the logic for generating responsive typographic scales.
+- **_color-logic.scss:** Manage global color variables and generate color utility classes.
+- **custom.scss:** Add your custom SCSS code to further customize styles.
 
 ## Support
 
