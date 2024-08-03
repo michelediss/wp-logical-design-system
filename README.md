@@ -86,5 +86,5 @@ Thank you for using Swell Scales! We hope this plugin helps you achieve beautifu
 
 ### Inspiration
 
-https://spencermortensen.com/articles/typographic-scale/< br / >
+https://spencermortensen.com/articles/typographic-scale/<br>
 https://heyreliable.com/ultimate-google-font-pairings
