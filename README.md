@@ -84,7 +84,7 @@ For any issues or support requests, please contact me at **mic.paolino@gmail.com
 
 Thank you for using Swell Scales! We hope this plugin helps you achieve beautiful and responsive typography and color management for your WordPress site.
 
-### Inspiration
+## Inspiration
 
 https://spencermortensen.com/articles/typographic-scale/<br>
 https://heyreliable.com/ultimate-google-font-pairings
