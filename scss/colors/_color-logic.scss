@@ -1,11 +1,10 @@
-
+// ========================================
 // _color-logic.scss
+// ========================================
 
-// Loop per generare variabili globali
+// ====== Loop for globala variables
 @each $color-name, $color-value in $colors {
-  // Utilizza il nome dinamico per definire le variabili
   @if type-of($color-value) == 'color' or type-of($color-value) == 'string' {
-    // Definisce le variabili di colore dinamicamente
     $global-variable-name: unquote($color-name);
     $global-variable-name: $color-value !global;
   }
@@ -19,16 +18,16 @@
   }
 }
 
-// mixin per le classi colore
+// ====== Mixin for color classes
 @mixin generate-color-classes {
   @each $color-name, $color-value in $colors {
     @if type-of($color-value) == 'color' {
       .bg-#{$color-name} {
         background-color: $color-value;
       }
-    } @else if type-of($color-value) == 'string' { // I gradienti sono definiti come stringhe
+    } @else if type-of($color-value) == 'string' { 
       .bg-#{$color-name} {
-        background-image: $color-value; // Specifica che si tratta di un'immagine
+        background-image: $color-value; 
       }
     }
 

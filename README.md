@@ -83,3 +83,8 @@ For advanced customization, you can modify the plugin's SCSS files directly:
 For any issues or support requests, please contact me at **mic.paolino@gmail.com.**
 
 Thank you for using Swell Scales! We hope this plugin helps you achieve beautiful and responsive typography and color management for your WordPress site.
+
+## Inspiration
+
+https://spencermortensen.com/articles/typographic-scale/
+https://heyreliable.com/ultimate-google-font-pairings

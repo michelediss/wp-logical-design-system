@@ -22,23 +22,4 @@ $colors: (
   "gradient-2": linear-gradient(to bottom, #000, #22092C)
 ) !global;
 
-@function get-color($color-name) {
-  @return map-get($colors, $color-name);
-}
 
-$yellow: get-color("yellow");
-$red: get-color("red");
-$green: get-color("green");
-$orange: get-color("orange");
-$light-blue: get-color("light-blue");
-$very-light-blue: get-color("very-light-blue");
-$purple: get-color("purple");
-$aqua: get-color("aqua");
-$turquoise: get-color("turquoise");
-$pink: get-color("pink");
-$black: get-color("black");
-$white: get-color("white");
-$pure-white: get-color("pure-white");
-$pure-black: get-color("pure-black");
-$gradient: get-color("gradient");
-$gradient-2: get-color("gradient-2");
