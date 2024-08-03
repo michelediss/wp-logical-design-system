@@ -60,7 +60,7 @@ Import the selected font pair in  *custom.scss*
 
 ### 4. Automatic SCSS Compilation
 
-Swell Scales automatically compiles SCSS files using **scssphp libraty** and enqueues the resulting style.min.css in the output directoty. This ensures that your styles are up-to-date without requiring manual compilation.
+Swell Scales automatically compiles SCSS files using **scssphp library** and enqueues the resulting style.min.css in the output directoty. This ensures that your styles are up-to-date without requiring manual compilation.
 
 ### 5. Custom SCSS
 You can add your own custom SCSS code by placing it in the custom.scss file within the plugin directory. This allows you to extend or override the default styles provided by Swell Scales.
