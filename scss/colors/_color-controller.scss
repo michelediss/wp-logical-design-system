@@ -1,21 +1,23 @@
 
+// ========================================
 // _color-controller.scss
+// ========================================
 
 $colors: (
-  "giallo": #fbb03b,
-  "rosso": #EC4040,
-  "verde": #56ca71,
-  "arancione": #ff6552,
-  "azzurro": #67a1ff,
-  "azzurro-chiaro": #c5ebff,
-  "viola": #8d80ff,
-  "acqua": #44cdd0,
-  "turchese": #02B399,
-  "rosa": #ffbfbe,
-  "nero": #12131D,
-  "bianco": #fef4f2,
-  "bianco-puro": #ffffff,
-  "nero-puro": #000000,
+  "yellow": #fbb03b,
+  "red": #EC4040,
+  "green": #56ca71,
+  "orange": #ff6552,
+  "light-blue": #67a1ff,
+  "very-light-blue": #c5ebff,
+  "purple": #8d80ff,
+  "aqua": #44cdd0,
+  "turquoise": #02B399,
+  "pink": #ffbfbe,
+  "black": #12131D,
+  "white": #fef4f2,
+  "pure-white": #ffffff,
+  "pure-black": #000000,
   "gradient": linear-gradient(to bottom, #000, #22092C, #000),
   "gradient-2": linear-gradient(to bottom, #000, #22092C)
 ) !global;
@@ -24,18 +26,19 @@ $colors: (
   @return map-get($colors, $color-name);
 }
 
-$giallo: get-color("giallo");
-$rosso: get-color("rosso");
-$verde: get-color("verde");
-$arancione: get-color("arancione");
-$azzurro: get-color("azzurro");
-$azzurro-chiaro: get-color("azzurro-chiaro");
-$viola: get-color("viola");
-$acqua: get-color("acqua");
-$turchese: get-color("turchese");
-$rosa: get-color("rosa");
-$nero: get-color("nero");
-$bianco: get-color("bianco");
-$bianco-puro: get-color("bianco-puro");
+$yellow: get-color("yellow");
+$red: get-color("red");
+$green: get-color("green");
+$orange: get-color("orange");
+$light-blue: get-color("light-blue");
+$very-light-blue: get-color("very-light-blue");
+$purple: get-color("purple");
+$aqua: get-color("aqua");
+$turquoise: get-color("turquoise");
+$pink: get-color("pink");
+$black: get-color("black");
+$white: get-color("white");
+$pure-white: get-color("pure-white");
+$pure-black: get-color("pure-black");
 $gradient: get-color("gradient");
 $gradient-2: get-color("gradient-2");
