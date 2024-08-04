@@ -2,6 +2,9 @@
 // _color-logic.scss
 // ========================================
 
+// ====== Import map
+@import 'colors/color-map';
+
 // ====== Loop for globala variables
 @each $color-name, $color-value in $colors {
   @if type-of($color-value) == 'color' or type-of($color-value) == 'string' {

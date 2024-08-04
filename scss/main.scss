@@ -1,11 +1,7 @@
 // font family import
-@import 'scss/font-pairing/_font-pairing-import';
+@import 'font-pairing/_font-pairing-import';
 
-// controller maps
-@import 'typo-scales/typo-scale-controller';
-@import 'colors/color-controller';
-
-// // sass logic
+// // scss logic
 @import 'typo-scales/typo-scale-logic';
 @import 'colors/color-logic';
 

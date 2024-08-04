@@ -2,6 +2,40 @@
 // _typo-scale-logic.scss
 // ========================================
 
+// ====== import map
+@import 'typo-scales/typo-scale-map';
+
+// ====== font size intervals
+
+$scale-names-above-base: (
+  'base', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl', '8xl', '9xl'
+) !global;
+
+$scale-names-below-base: (
+  'xs', 'sm'
+) !global;
+
+// ====== breakpoints
+
+$breakpoints: (
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+  '2xl': 1536px
+) !global;
+
+// ====== global map containing all sub-maps
+
+$settings: (
+  responsiveBaseFontSize: $responsiveBaseFontSize,
+  customFontSizeScale: $customFontSizeScale,
+  scaleNamesAboveBase: $scale-names-above-base,
+  scaleNamesBelowBase: $scale-names-below-base
+) !global;
+
+
+
+
 
 // ====== Pow function
 
@@ -53,11 +87,11 @@
 
 // ====== Function to generate the typographical scale
 
-@function generateTypographicScale($baseFontSize, $ratio, $scaleNamesAboveBase, $scaleNamesBelowBase, $count) {
+@function generateTypographicScale($baseFontSize, $ratio, $scaleNamesAboveBase, $scaleNamesBelowBase) {
   $scale: ();
 
   // Generate sizes above the base
-  @for $i from 0 through $count {
+    @for $i from 1 through length($scaleNamesAboveBase) {
     $size: $baseFontSize * pow($ratio, $i);
     $size: round($size * 100) / 100;
     $scale-name: if($i < length($scaleNamesAboveBase), nth($scaleNamesAboveBase, $i + 1), 'scale-' + $i + 1);
@@ -81,7 +115,6 @@ $custom-font-scale: generateTypographicScale(
   map-get($customFontSizeScale, 'r'),
   map-get($settings, 'scaleNamesAboveBase'),
   map-get($settings, 'scaleNamesBelowBase'),
-  map-get($customFontSizeScale, 'count')
 );
 
 // ====== Mixins to create classes

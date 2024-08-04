@@ -1,65 +1,83 @@
 <?php
 /*
 Plugin Name: Swell Scales for WordPress
-Description: Enhance your Tailwind CSS projects with a typographic scales generator, font pairing system, and color palette creator. 
+Description: Enhance your WordPress projects with a typographic scales generator, font pairing system, and color palette creator. 
 Version: 1.0
 Author: Michele Paolino
 */
 
+// Include the SCSSPHP library
 require 'libs/scssphp/scss.inc.php';
 
 use ScssPhp\ScssPhp\Compiler;
 
-function swell_scales_compile_scss() {
-    $scss = new Compiler();
-
-    $scss->setImportPaths( plugin_dir_path( __FILE__ ) . 'scss/' );
-
-    $scss_content = file_get_contents( plugin_dir_path( __FILE__ ) . 'scss/main.scss' );
-
-    if ($scss_content === false) {
-        error_log('Impossibile leggere il file main.scss');
-        return;
-    }
-
-    try {
-        $compiled_css = $scss->compile($scss_content);
-        file_put_contents( plugin_dir_path( __FILE__ ) . 'output-css/style.css', $compiled_css );
-
-        $scss->setFormatter('ScssPhp\ScssPhp\Formatter\Compressed');
-        $minified_css = $scss->compile($scss_content);
-        file_put_contents( plugin_dir_path( __FILE__ ) . 'output-css/style.min.css', $minified_css );
-    } catch (Exception $e) {
-        error_log('Errore durante la compilazione SCSS: ' . $e->getMessage());
-    }
+// Function to add the "Compile SCSS" button to the wpadminbar
+function add_compile_button($wp_admin_bar) {
+    // Define the properties of the new button
+    $args = array(
+        'id' => 'compile_scss', // Button ID
+        'title' => 'Compile SCSS', // Button title
+        'href' => admin_url('?action=compila_scss'), // URL the button points to
+        'meta' => array(
+            'class' => 'compile-scss-class', // CSS class for styling
+            'title' => 'Compile SCSS' // Tooltip title
+        )
+    );
+    // Add the button to the wpadminbar
+    $wp_admin_bar->add_node($args);
 }
+// Hook the function to 'admin_bar_menu' action with high priority (999)
+add_action('admin_bar_menu', 'add_compile_button', 999);
 
-function swell_scales_enqueue_styles() {
-    $min_css_path = plugin_dir_url( __FILE__ ) . 'output-css/style.min.css';
+// Function to handle the SCSS compilation request
+function gestisci_compilazione_scss() {
+    // Check if the 'compila_scss' action is triggered
+    if (isset($_GET['action']) && $_GET['action'] === 'compila_scss') {
+        $scss = new Compiler(); // Initialize the SCSS compiler
+        $scss->setImportPaths(__DIR__ . '/scss/'); // Set the import path for SCSS files
 
-    wp_enqueue_style( 'swell-scales-styles-min', $min_css_path );
-}
-add_action( 'wp_enqueue_scripts', 'swell_scales_enqueue_styles' );
+        // Read the main SCSS file content
+        $scss_content = file_get_contents(__DIR__ . '/scss/main.scss');
 
-function swell_scales_watch_scss_changes() {
-    $scss_directory = plugin_dir_path( __FILE__ ) . 'scss/';
-    $last_check_file = plugin_dir_path( __FILE__ ) . 'scss/.last_scss_check';
+        // If the SCSS file cannot be read, terminate with an error message
+        if ($scss_content === false) {
+            wp_die('Unable to read the main.scss file');
+        }
 
-    $last_check = @file_get_contents($last_check_file);
-    if ($last_check === false) {
-        $last_check = time();
-        file_put_contents($last_check_file, $last_check);
-    }
+        try {
+            // Compile the SCSS content to CSS
+            $compiled_css = $scss->compile($scss_content);
+            // Save the compiled CSS to a file
+            file_put_contents(__DIR__ . '/output-css/style.css', $compiled_css);
 
-    $last_check = (int)$last_check;
+            // Set the formatter to compressed for minified CSS
+            $scss->setFormatter('ScssPhp\ScssPhp\Formatter\Compressed');
+            // Compile the minified CSS
+            $minified_css = $scss->compile($scss_content);
+            // Save the minified CSS to a file
+            file_put_contents(__DIR__ . '/output-css/style.min.css', $minified_css);
 
-    $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($scss_directory));
-    foreach ($files as $file) {
-        if (pathinfo($file, PATHINFO_EXTENSION) === 'scss' && filemtime($file) > $last_check) {
-            swell_scales_compile_scss();
-            file_put_contents($last_check_file, time());
-            break;
+            // Display a success message and terminate
+            wp_die('Compilation completed successfully!');
+        } catch (\ScssPhp\ScssPhp\Exception\CompilerException $e) {
+            // Handle SCSS compiler exceptions and display the error message
+            wp_die('Error during SCSS compilation: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            // Handle general exceptions and display the error message
+            wp_die('General error: ' . $e->getMessage());
         }
     }
 }
-add_action('init', 'swell_scales_watch_scss_changes');
+// Hook the function to 'admin_init' action
+add_action('admin_init', 'gestisci_compilazione_scss');
+
+// Function to enqueue the compiled and minified CSS file in WordPress
+function swell_scales_enqueue_styles() {
+    // Get the URL path of the minified CSS file
+    $min_css_path = plugin_dir_url(__FILE__) . 'output-css/style.min.css';
+
+    // Enqueue the minified CSS file with a handle 'swell-scales-styles-min'
+    wp_enqueue_style('swell-scales-styles-min', $min_css_path);
+}
+// Hook the function to 'wp_enqueue_scripts' action to include the CSS file in the frontend
+add_action('wp_enqueue_scripts', 'swell_scales_enqueue_styles');
