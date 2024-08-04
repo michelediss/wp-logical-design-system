@@ -5,18 +5,16 @@
 // ====== Import map
 @import 'colors/color-map';
 
-// ====== Loop for globala variables
-@each $color-name, $color-value in $colors {
-  @if type-of($color-value) == 'color' or type-of($color-value) == 'string' {
-    $global-variable-name: unquote($color-name);
-    $global-variable-name: $color-value !global;
-  }
+// ====== Function to get color value by name
+@function get-color($name) {
+  @return map-get($colors, $name);
 }
 
+// ====== Set CSS custom properties (variables) for gradients
 :root {
   @each $color-name, $color-value in $colors {
-    @if $color-name == 'gradient' {
-      --bs-gradient: #{$color-value};
+    @if $color-name == 'gradient' or $color-name == 'gradient-2' {
+      --#{$color-name}: #{$color-value};
     }
   }
 }
