@@ -1,6 +1,6 @@
 
 # Swell Scales WordPress Plugin
-Welcome to the Swell Scales WordPress plugin! This plugin is inspired by the application of concepts underlying musical scales to web typography. It provides advanced typographical and color management features, including responsive typographic scales, dynamic color classes, and a wide selection of Google Fonts. Additionally, it includes automatic SCSS compilation and the ability to add custom SCSS.
+Welcome to the Swell Scales WordPress plugin! This plugin is inspired by the application of concepts underlying musical scales to web typography. It provides advanced typographical and color management features, including responsive typographic scales, dynamic color classes, and a wide selection of Google Fonts couples. Additionally, it includes automatic SCSS compilation and the ability to add custom SCSS.
 
 ## Features and usage
 
