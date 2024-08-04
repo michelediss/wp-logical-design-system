@@ -50,6 +50,28 @@ $colors: (
 
 This setup generates classes like .bg-yellow, .text-red, and .border-green, ecc which you can use throughout your WordPress site for consistent styling.
 
+In addition to the generated utility classes, you can access color values directly in your SCSS code using the get-color function. This function retrieves color values from the $colors map, allowing for dynamic and reusable color management.
+
+**Function Definition:**
+```scss
+@function get-color($name) {
+  @return map-get($colors, $name);
+}
+```
+
+**Example Usage:**
+```scss
+body {
+  background-color: get-color('light-blue');
+  color: get-color('black');
+}
+
+.button-primary {
+  background-color: get-color('aqua');
+  border-color: get-color('turquoise');
+}
+```
+
 ### 3. Google Fonts Integration
 Swell Scales provides access to **50 pairs of Google Fonts.** Easily integrate popular Google Fonts into your WordPress site and apply them to your typographic styles.
 
