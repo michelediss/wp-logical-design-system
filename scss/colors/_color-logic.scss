@@ -6,7 +6,7 @@
 @import 'colors/color-map';
 
 // ====== Function to get color value by name
-@function get-color($name) {
+@function color($name) {
   @return map-get($colors, $name);
 }
 

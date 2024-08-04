@@ -54,7 +54,7 @@ In addition to the generated utility classes, you can access color values direct
 
 **Function Definition:**
 ```scss
-@function get-color($name) {
+@function color($name) {
   @return map-get($colors, $name);
 }
 ```
