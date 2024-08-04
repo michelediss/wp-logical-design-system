@@ -17,7 +17,7 @@ function add_compile_button($wp_admin_bar) {
     $args = array(
         'id' => 'compile_scss', // Button ID
         'title' => 'Compile SCSS', // Button title
-        'href' => admin_url('?action=compila_scss'), // URL the button points to
+        'href' => '#', // Use JavaScript to handle the click
         'meta' => array(
             'class' => 'compile-scss-class', // CSS class for styling
             'title' => 'Compile SCSS' // Tooltip title
@@ -29,47 +29,47 @@ function add_compile_button($wp_admin_bar) {
 // Hook the function to 'admin_bar_menu' action with high priority (999)
 add_action('admin_bar_menu', 'add_compile_button', 999);
 
-// Function to handle the SCSS compilation request
-function gestisci_compilazione_scss() {
-    // Check if the 'compila_scss' action is triggered
-    if (isset($_GET['action']) && $_GET['action'] === 'compila_scss') {
-        $scss = new Compiler(); // Initialize the SCSS compiler
-        $scss->setImportPaths(__DIR__ . '/scss/'); // Set the import path for SCSS files
+// Function to handle the SCSS compilation request via AJAX
+function handle_scss_compilation_ajax() {
+    // Check for nonce security
+    check_ajax_referer('scss_compilation_nonce', 'security');
 
-        // Read the main SCSS file content
-        $scss_content = file_get_contents(__DIR__ . '/scss/main.scss');
+    $scss = new Compiler(); // Initialize the SCSS compiler
+    $scss->setImportPaths(__DIR__ . '/scss/'); // Set the import path for SCSS files
 
-        // If the SCSS file cannot be read, terminate with an error message
-        if ($scss_content === false) {
-            wp_die('Unable to read the main.scss file');
-        }
+    // Read the main SCSS file content
+    $scss_content = file_get_contents(__DIR__ . '/scss/main.scss');
 
-        try {
-            // Compile the SCSS content to CSS
-            $compiled_css = $scss->compile($scss_content);
-            // Save the compiled CSS to a file
-            file_put_contents(__DIR__ . '/output-css/style.css', $compiled_css);
+    // If the SCSS file cannot be read, return an error message
+    if ($scss_content === false) {
+        wp_send_json_error('Unable to read the main.scss file');
+    }
 
-            // Set the formatter to compressed for minified CSS
-            $scss->setFormatter('ScssPhp\ScssPhp\Formatter\Compressed');
-            // Compile the minified CSS
-            $minified_css = $scss->compile($scss_content);
-            // Save the minified CSS to a file
-            file_put_contents(__DIR__ . '/output-css/style.min.css', $minified_css);
+    try {
+        // Compile the SCSS content to CSS
+        $compiled_css = $scss->compile($scss_content);
+        // Save the compiled CSS to a file
+        file_put_contents(__DIR__ . '/output-css/style.css', $compiled_css);
 
-            // Display a success message and terminate
-            wp_die('Compilation completed successfully!');
-        } catch (\ScssPhp\ScssPhp\Exception\CompilerException $e) {
-            // Handle SCSS compiler exceptions and display the error message
-            wp_die('Error during SCSS compilation: ' . $e->getMessage());
-        } catch (\Exception $e) {
-            // Handle general exceptions and display the error message
-            wp_die('General error: ' . $e->getMessage());
-        }
+        // Set the formatter to compressed for minified CSS
+        $scss->setFormatter('ScssPhp\ScssPhp\Formatter\Compressed');
+        // Compile the minified CSS
+        $minified_css = $scss->compile($scss_content);
+        // Save the minified CSS to a file
+        file_put_contents(__DIR__ . '/output-css/style.min.css', $minified_css);
+
+        // Return success response
+        wp_send_json_success('Compilation completed successfully!');
+    } catch (\ScssPhp\ScssPhp\Exception\CompilerException $e) {
+        // Handle SCSS compiler exceptions and return the error message
+        wp_send_json_error('Error during SCSS compilation: ' . $e->getMessage());
+    } catch (\Exception $e) {
+        // Handle general exceptions and return the error message
+        wp_send_json_error('General error: ' . $e->getMessage());
     }
 }
-// Hook the function to 'admin_init' action
-add_action('admin_init', 'gestisci_compilazione_scss');
+// Hook the AJAX functions for logged-in users
+add_action('wp_ajax_compile_scss', 'handle_scss_compilation_ajax');
 
 // Function to enqueue the compiled and minified CSS file in WordPress
 function swell_scales_enqueue_styles() {
@@ -81,3 +81,17 @@ function swell_scales_enqueue_styles() {
 }
 // Hook the function to 'wp_enqueue_scripts' action to include the CSS file in the frontend
 add_action('wp_enqueue_scripts', 'swell_scales_enqueue_styles');
+
+// Enqueue the JavaScript for AJAX handling
+function enqueue_scss_compilation_script() {
+    // Enqueue the custom script
+    wp_enqueue_script('scss_compilation_script', plugin_dir_url(__FILE__) . 'scss-compilation.js', array('jquery'), null, true);
+
+    // Localize the script with necessary data
+    wp_localize_script('scss_compilation_script', 'scss_compilation', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('scss_compilation_nonce')
+    ));
+}
+// Hook to enqueue the script in admin
+add_action('admin_enqueue_scripts', 'enqueue_scss_compilation_script');
