@@ -62,13 +62,8 @@ In addition to the generated utility classes, you can access color values direct
 **Example Usage:**
 ```scss
 body {
-  background-color: get-color('light-blue');
-  color: get-color('black');
-}
-
-.button-primary {
-  background-color: get-color('aqua');
-  border-color: get-color('turquoise');
+  background-color: color('light-blue');
+  color: color('black');
 }
 ```
 
