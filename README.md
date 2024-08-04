@@ -21,7 +21,7 @@ Swell Scales helps you create responsive typographic scales effortlessly. By con
 ```scss
 $responsiveBaseFontSize: (
   baseSize: 17,
-  incrementFactor: 0.99
+  incrementFactor: 1.05
 );
 
 $customFontSizeScale: (
