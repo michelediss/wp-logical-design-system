@@ -22,4 +22,7 @@ $colors: (
   "gradient-2": linear-gradient(to bottom, #000, #22092C)
 ) !global;
 
+@function get-color($color-name) {
+  @return map-get($colors, $color-name);
+}
 
