@@ -92,6 +92,10 @@ For advanced customization, you can modify the plugin's SCSS files directly:
 - **_typo-scale-logic.scss:** Adjust the logic for generating responsive typographic scales.
 - **_color-logic.scss:** Manage global color variables and generate color utility classes.
 
+## Contribution
+
+Feel free to contribute to the development of this plugin by submitting pull requests or opening issues on GitHub.
+
 ## Support
 
 For any issues or support requests, please contact me at **mic.paolino@gmail.com.**
