@@ -1,104 +1,71 @@
+# SCSS WordPress Compiler
 
-# Swell Scales WordPress Plugin
-Welcome to the Swell Scales WordPress plugin! This plugin is inspired by the application of concepts underlying musical scales to web typography. It provides advanced typographical and color management features, including responsive typographic scales, dynamic color classes, and a wide selection of Google Fonts couples. Additionally, it includes automatic SCSS compilation and the ability to add custom SCSS.
+SCSS WordPress Compiler is a WordPress plugin that allows you to compile and enqueue SCSS files with a single click from the admin toolbar. This plugin uses the SCSSPHP library to handle SCSS compilation and provides a simple way to manage your stylesheets in WordPress.
 
-## Features and usage
+## Features
 
-### 1. Responsive Typographic Scales
-Swell Scales helps you create responsive typographic scales effortlessly. By configuring a few parameters at **/scss/typo-scales/_typo-scale-map.scss**, you can generate consistent and scalable typographic scales across different screen sizes.
-
-**Generated pettern class:**
-```scss
-.text-{screen-size}-{typographic-interval}
-```
-
-**Key Parameters:**
-- **Base Size**: Defines the root font size in px for your typography.
-- **Increment Factor**: Controls the growth rate of font sizes at different breakpoints.
-- **Ratio**: Determines the scale ratio for font sizes.
-
-**Example Configuration:**
-```scss
-$responsiveBaseFontSize: (
-  baseSize: 17,
-  incrementFactor: 1.05
-);
-
-$customFontSizeScale: (
-  r: 1.25,
-);
-```
-
-With these settings, Swell Scales generates a typographic scale based on the specified base size, increment factor, and ratio. The plugin also supports responsive font sizes, ensuring your typography adapts smoothly to different screen sizes.
-
-### 2. Dynamic Color Classes
-Create and manage a wide range of color classes easily with Swell Scales. The plugin supports solid colors and gradients, generating corresponding utility classes for background colors, text colors, borders, and fill.
-
-**Color Management:**
-Define color variables at **/scss/colors/_color-map.scss**
-Generate CSS classes for background, text, border, and fill colors.
-
-**Example Configuration:**
-```scss
-$colors: (
-  "yellow": #fbb03b,
-  "red": #EC4040,
-  "green": #56ca71,
-  // Add more colors...
-);
-```
-
-This setup generates classes like .bg-yellow, .text-red, and .border-green, ecc which you can use throughout your WordPress site for consistent styling.
-
-In addition to the generated utility classes, you can access color values directly in your SCSS code using the get-color function. This function retrieves color values from the $colors map, allowing for dynamic and reusable color management.
-
-**Function Definition:**
-```scss
-@function color($name) {
-  @return map-get($colors, $name);
-}
-```
-
-**Example Usage:**
-```scss
-body {
-  background-color: color('light-blue');
-  color: color('black');
-}
-```
-
-### 3. Google Fonts Integration
-Swell Scales provides access to **50 pairs of Google Fonts.** Easily integrate popular Google Fonts into your WordPress site and apply them to your typographic styles.
-
-Import the selected font pair in  **scss/font-pairing/_font-pairing-import.scss**
-The font pair partials are located in **scss/font-pairing/_font-pairing-list/** directory.
-
-### 4. Automatic SCSS Compilation
-
-Swell Scales automatically compiles SCSS files using **scssphp library** and enqueues the resulting style.min.css in the output directoty. This ensures that your styles are up-to-date without requiring manual compilation, just click on the button **Compile SCSS** in the WP admin bar.
-
-### 5. Custom SCSS
-You can add your own custom SCSS code by placing it in the **custom.scss** file within the plugin directory. This allows you to extend or override the default styles provided by Swell Scales.
+- **Compile SCSS**: Compile your SCSS files into CSS directly from the WordPress admin toolbar.
+- **Enqueue CSS**: Automatically enqueue the compiled CSS in the WordPress frontend.
+- **Minified Output**: Generates both regular and minified CSS files for optimal performance.
+- **AJAX Handling**: Uses AJAX for seamless SCSS compilation without page reloads.
 
 ## Installation
 
-Upload the swell-scales plugin folder to the /wp-content/plugins/ directory.
-Activate the plugin through the 'Plugins' menu in WordPress.
+1. **Download and Install**: Download the plugin and upload it to your WordPress site's `wp-content/plugins` directory.
+2. **Activate the Plugin**: Go to the Plugins menu in WordPress and activate the SCSS WordPress Compiler plugin.
 
-## Customization
+## Usage
 
-For advanced customization, you can modify the plugin's SCSS files directly:
+1. **SCSS Directory**: Place your SCSS files in the `scss` directory inside the plugin folder. Ensure there is a `main.scss` file as the entry point.
+2. **Compile SCSS**: Click the "Compile SCSS" button in the WordPress admin toolbar to compile your SCSS files.
+3. **Enqueued CSS**: The compiled and minified CSS files will be automatically enqueued in your WordPress theme.
 
-- **_typo-scale-logic.scss:** Adjust the logic for generating responsive typographic scales.
-- **_color-logic.scss:** Manage global color variables and generate color utility classes.
+## File Structure
+
+```
+scss-wp-compiler/
+│
+├── libs/
+│ └── scssphp/ # SCSSPHP library
+│ └── scss.inc.php
+│
+├── output-css/ # Compiled CSS output
+│ ├── style.css
+│ └── style.min.css
+│
+├── scss/ # SCSS source files
+│ └── main.scss
+│
+├── scss-wp-compiler.php # Main plugin file
+└── scss-compilation.js # JavaScript for AJAX handling
+```
+
+
+## Code Overview
+
+### Main Plugin File: `scss-wp-compiler.php`
+
+- **Admin Toolbar Button**: Adds a "Compile SCSS" button to the WordPress admin toolbar.
+- **AJAX Handler**: Handles AJAX requests to compile SCSS files.
+- **Enqueue Styles**: Enqueues the compiled and minified CSS files in the WordPress frontend.
+- **Enqueue Script**: Enqueues the JavaScript file that handles the AJAX request.
+
+### JavaScript File: `scss-compilation.js`
+
+- Handles the click event on the "Compile SCSS" button.
+- Sends an AJAX request to the server to trigger SCSS compilation.
+- Displays success or error messages based on the AJAX response.
+
+## Security
+
+- Nonce verification is used to secure the AJAX requests for SCSS compilation.
+
+## Contribution
+
+Feel free to contribute to the development of this plugin by submitting pull requests or opening issues on GitHub.
 
 ## Support
 
 For any issues or support requests, please contact me at **mic.paolino@gmail.com.**
 
 Thank you for using Swell Scales! We hope this plugin helps you achieve beautiful and responsive typography and color management for your WordPress site.
-
-### Inspiration for this plugin
-
-https://spencermortensen.com/articles/typographic-scale/<br>
-https://heyreliable.com/ultimate-google-font-pairings

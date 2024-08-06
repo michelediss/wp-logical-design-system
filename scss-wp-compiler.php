@@ -1,8 +1,7 @@
 <?php
 /*
-Plugin Name: Swell Scales for WordPress
-Description: Enhance your WordPress projects with a typographic scales generator, font pairing system, and color palette creator. 
-Version: 1.0
+Plugin Name: SCSS WordPress Compiler
+Description: Compile and enqueue SCSS in WordPress in one click
 Author: Michele Paolino
 */
 
