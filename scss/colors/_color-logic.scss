@@ -1,0 +1,49 @@
+// ========================================
+// _color-logic.scss
+// ========================================
+
+// ====== Import map
+@import 'colors/color-map';
+
+// ====== Function to get color value by name
+@function color($name) {
+  @return map-get($colors, $name);
+}
+
+// ====== Set CSS custom properties (variables) for gradients
+:root {
+  @each $color-name, $color-value in $colors {
+    @if $color-name == 'gradient' or $color-name == 'gradient-2' {
+      --#{$color-name}: #{$color-value};
+    }
+  }
+}
+
+// ====== Mixin for color classes
+@mixin generate-color-classes {
+  @each $color-name, $color-value in $colors {
+    @if type-of($color-value) == 'color' {
+      .bg-#{$color-name} {
+        background-color: $color-value;
+      }
+    } @else if type-of($color-value) == 'string' { 
+      .bg-#{$color-name} {
+        background-image: $color-value; 
+      }
+    }
+
+    .text-#{$color-name} {
+      color: $color-value;
+    }
+
+    .border-#{$color-name} {
+      border-color: $color-value;
+    }
+
+    .fill-#{$color-name} {
+      fill: $color-value;
+    }
+  }
+}
+
+@include generate-color-classes;

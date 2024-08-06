@@ -1,2 +1,10 @@
-// custom .scss code
+// font family import
+@import 'font-pairing/_font-pairing-import';
+
+// // scss logic
+@import 'typo-scales/typo-scale-logic';
+@import 'colors/color-logic';
+
+// custom css
+@import 'custom';
 
