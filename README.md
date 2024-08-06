@@ -64,10 +64,6 @@ scss-wp-compiler/
 
 Feel free to contribute to the development of this plugin by submitting pull requests or opening issues on GitHub.
 
-## Contribution
-
-Feel free to contribute to the development of this plugin by submitting pull requests or opening issues on GitHub.
-
 ## Support
 
 For any issues or support requests, please contact me at **mic.paolino@gmail.com.**
