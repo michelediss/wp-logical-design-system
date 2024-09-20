@@ -1,11 +1,11 @@
 
-# Swell Scales WordPress Plugin
-Welcome to the Swell Scales WordPress plugin! This plugin is inspired by the application of concepts underlying musical scales to web typography. It provides advanced typographical and color management features, including responsive typographic scales, dynamic color classes, and a wide selection of Google Fonts couples. Additionally, it includes automatic SCSS compilation and the ability to add custom SCSS.
+# Logical Design System plugin for WordPress
+Welcome to the Logical Design System plugin! This plugin is inspired by the application of concepts underlying musical scales to web typography. It provides advanced typographical and color management features, including responsive typographic scales, dynamic color classes, and a wide selection of Google Fonts couples. Additionally, it includes automatic SCSS compilation and the ability to add custom SCSS.
 
 ## Features and usage
 
 ### 1. Responsive Typographic Scales
-Swell Scales helps you create responsive typographic scales effortlessly. By configuring a few parameters at **/scss/typo-scales/_typo-scale-map.scss**, you can generate consistent and scalable typographic scales across different screen sizes.
+Logical Design System helps you create responsive typographic scales effortlessly. By configuring a few parameters at **/scss/typo-scales/_typo-scale-map.scss**, you can generate consistent and scalable typographic scales across different screen sizes.
 
 **Generated pettern class:**
 ```scss
@@ -29,10 +29,10 @@ $customFontSizeScale: (
 );
 ```
 
-With these settings, Swell Scales generates a typographic scale based on the specified base size, increment factor, and ratio. The plugin also supports responsive font sizes, ensuring your typography adapts smoothly to different screen sizes.
+With these settings, Logical Design System generates a typographic scale based on the specified base size, increment factor, and ratio. The plugin also supports responsive font sizes, ensuring your typography adapts smoothly to different screen sizes.
 
 ### 2. Dynamic Color Classes
-Create and manage a wide range of color classes easily with Swell Scales. The plugin supports solid colors and gradients, generating corresponding utility classes for background colors, text colors, borders, and fill.
+Create and manage a wide range of color classes easily with Logical Design System. The plugin supports solid colors and gradients, generating corresponding utility classes for background colors, text colors, borders, and fill.
 
 **Color Management:**
 Define color variables at **/scss/colors/_color-map.scss**
@@ -68,17 +68,17 @@ body {
 ```
 
 ### 3. Google Fonts Integration
-Swell Scales provides access to **50 pairs of Google Fonts.** Easily integrate popular Google Fonts into your WordPress site and apply them to your typographic styles.
+Logical Design System provides access to **50 pairs of Google Fonts.** Easily integrate popular Google Fonts into your WordPress site and apply them to your typographic styles.
 
 Import the selected font pair in  **scss/font-pairing/_font-pairing-import.scss**
 The font pair partials are located in **scss/font-pairing/_font-pairing-list/** directory.
 
 ### 4. Automatic SCSS Compilation
 
-Swell Scales automatically compiles SCSS files using **scssphp library** and enqueues the resulting style.min.css in the output directoty. This ensures that your styles are up-to-date without requiring manual compilation, just click on the button **Compile SCSS** in the WP admin bar.
+Logical Design System automatically compiles SCSS files using **scssphp library** and enqueues the resulting style.min.css in the output directoty. This ensures that your styles are up-to-date without requiring manual compilation, just click on the button **Compile SCSS** in the WP admin bar.
 
 ### 5. Custom SCSS
-You can add your own custom SCSS code by placing it in the **custom.scss** file within the plugin directory. This allows you to extend or override the default styles provided by Swell Scales.
+You can add your own custom SCSS code by placing it in the **custom.scss** file within the plugin directory. This allows you to extend or override the default styles provided by Logical Design System.
 
 ## Installation
 
@@ -100,11 +100,9 @@ Feel free to contribute to the development of this plugin by submitting pull req
 
 For any issues or support requests, please contact me at **mic.paolino@gmail.com.**
 
-Thank you for using Swell Scales! We hope this plugin helps you achieve beautiful and responsive typography and color management for your WordPress site.
+Thank you for using Logical Design System! We hope this plugin helps you achieve beautiful and responsive typography and color management for your WordPress site.
 
 ## Inspiration 
 
 https://spencermortensen.com/articles/typographic-scale/<br>
 https://heyreliable.com/ultimate-google-font-pairings
-
-Thank you for using Swell Scales! We hope it brings the same harmony and flow to your projects as the ocean brings to the world. 🌊
