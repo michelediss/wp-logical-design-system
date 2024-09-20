@@ -7,7 +7,6 @@ Version: 1.0
 Author: Michele Paolino
 Author URI: https://michelepaolino.me
 */
-*/
 
 // Include the SCSSPHP library
 require 'libs/scssphp/scss.inc.php';
