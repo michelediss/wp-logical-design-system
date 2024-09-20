@@ -1,8 +1,12 @@
 <?php
 /*
-Plugin Name: SCSS WordPress Compiler
-Description: Compile and enqueue SCSS in WordPress in one click
+Plugin Name: Logical Design System
+Plugin URI: https://github.com/michelediss/wp-logical-design-system
+Description: Finally a logical design system: color palette & typographic scale generator + 50 google font pairings
+Version: 1.0
 Author: Michele Paolino
+Author URI: https://michelepaolino.me
+*/
 */
 
 // Include the SCSSPHP library
