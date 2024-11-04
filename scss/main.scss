@@ -1,10 +1,22 @@
-// font family import
-@import 'font-pairing/_font-pairing-import';
+// main.scss
 
-// // scss logic
-@import 'typo-scales/typo-scale-logic';
-@import 'colors/color-logic';
+// Importa le funzioni di Bootstrap (necessarie per le variabili che usano funzioni come shade-color)
+@import 'bootstrap/scss/_functions';
 
-// custom css
-@import 'custom';
+// Importa il file con le tue sovrascritture di variabili
+@import 'lds-input';
 
+// Importa le variabili di Bootstrap (così le tue sovrascritture verranno applicate)
+@import 'bootstrap/scss/_variables';
+
+// Importa i mixin di Bootstrap (necessari per il resto di Bootstrap)
+@import 'bootstrap/scss/_mixins';
+
+// Importa il resto di Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Importa la logica SCSS del plugin
+@import 'lds-logic';
+
+// Importa il CSS personalizzato del plugin
+@import 'lds-custom';
