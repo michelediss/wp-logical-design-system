@@ -1,7 +1,7 @@
 // _lds-logic.scss 
 
 // ========================================
-// Typography Logic
+// Typographic Logic
 // ========================================
 
 // ====== font size intervals
@@ -128,6 +128,81 @@ $custom-font-scale: generateTypographicScale(
 }
 
 @include createTypographyClasses;
+
+
+// ========================================
+// Cromatic Logic
+// ========================================
+
+// Function to lighten a color (tint) by mixing it with white
+@function tint-color($color, $percent) {
+  @return mix(white, $color, $percent);
+}
+
+// Function to darken a color (shade) by mixing it with black
+@function shade-color($color, $percent) {
+  @return mix(black, $color, $percent);
+}
+
+// Function to generate a color scale similar to Bootstrap
+// Example: ("red-100": ..., "red-200": ..., ..., "red-900": ...)
+@function generate-color-scale($name, $color) {
+  $scale: (
+    "#{$name}-100": tint-color($color, 80%),
+    "#{$name}-200": tint-color($color, 60%),
+    "#{$name}-300": tint-color($color, 40%),
+    "#{$name}-400": tint-color($color, 20%),
+    "#{$name}-500": $color,
+    "#{$name}-600": shade-color($color, 20%),
+    "#{$name}-700": shade-color($color, 40%),
+    "#{$name}-800": shade-color($color, 60%),
+    "#{$name}-900": shade-color($color, 80%)
+  );
+  
+  @return $scale;
+}
+
+// Mixin to generate background, text, border, and fill classes
+// Example: for "red-300" generates .bg-red-300 { background-color: ... }
+@mixin generate-color-classes($color-map) {
+  @each $key, $val in $color-map {
+    .bg-#{$key} {
+      background-color: $val !important;
+    }
+    .text-#{$key} {
+      color: $val !important;
+    }
+    .border-#{$key} {
+      border-color: $val !important;
+    }
+    .fill-#{$key} {
+      fill: $val !important;
+    }
+  }
+}
+
+// ========================================
+// Containers
+// ========================================
+
+// Creiamo un mixin che generi dinamicamente le regole .container per ogni breakpoint
+@mixin container-max-widths($breakpoints, $max-widths) {
+  @each $label, $min-width in $breakpoints {
+    // Eseguiamo il media query solo se anche in $max-widths esiste la stessa chiave ($label)
+    @if map-has-key($max-widths, $label) {
+      @media (min-width: #{map-get($breakpoints, $label)}) {
+        .container {
+          max-width: map-get($max-widths, $label);
+        }
+      }
+    }
+  }
+}
+
+// Infine richiamiamo il mixin passando le due mappe
+@include container-max-widths($grid-breakpoints, $container-max-widths);
+
+
 
 
 
