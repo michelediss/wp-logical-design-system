@@ -1,22 +1,19 @@
 // main.scss
 
-// Importa le funzioni di Bootstrap (necessarie per le variabili che usano funzioni come shade-color)
-@import 'bootstrap/scss/_functions';
+@import 'lds-font';
 
-// Importa il file con le tue sovrascritture di variabili
 @import 'lds-input';
 
-// Importa le variabili di Bootstrap (così le tue sovrascritture verranno applicate)
-@import 'bootstrap/scss/_variables';
-
-// Importa i mixin di Bootstrap (necessari per il resto di Bootstrap)
-@import 'bootstrap/scss/_mixins';
-
-// Importa il resto di Bootstrap
-@import 'bootstrap/scss/bootstrap';
-
-// Importa la logica SCSS del plugin
 @import 'lds-logic';
 
-// Importa il CSS personalizzato del plugin
+@import 'bootstrap/scss/bootstrap';
+
+@import 'plugins/swiper-11.2.1.scss';
+
 @import 'lds-custom';
+
+// Generate color classes
+@each $name, $color in $my-colors {
+    $scale: generate-color-scale($name, $color);
+    @include generate-color-classes($scale);
+  }
