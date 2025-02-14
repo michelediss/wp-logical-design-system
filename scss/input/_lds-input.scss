@@ -2,41 +2,66 @@
 // input parameters
 // ========================================
 
-
 // ====== typographic scale
 
-$responsiveBaseFontSize: (
-  baseSize: 17,
-  incrementFactor: 0.99
+// paragraph parameters
+$BaseSettings: (
+  paragraph: (
+    baseSize: 16,
+    r: 1.2,
+    incrementFactor: 1.01,
+  ),
+  heading: (
+    baseSize: 18,
+    r: 1.333,
+    incrementFactor: 1.01,
+  ),
+  caption: (
+    baseSize: 14,
+    r: 1.275,
+    incrementFactor: 1.01,
+  )
 );
 
-$customFontSizeScale: (
-  r: 1.25,
-);
+// ====== cromatic scales
 
-
-// ====== colors
+$black: #1e201f;
+$white: #fcfcfe;
 
 $my-colors: (
-  "blue": #2c6abf,
-  "beige": #c7a260,
-  "orange": #f5724c,
-  "yellowww": #f2bc20,
-  "green": #385953
+  "gray": #6b7280,
+  "red": #f05252,
+  "yellow": #c27803,
+  "green": #0e9f6e,
+  "blue": #3f83f8,
+  "indigo": #6875f5,
+  "purple": #9061f9,
+  "pink": #e74694,
 );
-
 
 // ====== breakpoints
 
 $grid-breakpoints: (
-  xs: 0,
+  null: 0,
   sm: 576px,
   md: 768px,
   lg: 1024px,
-  xl: 1440px,
-  xxl: 1920px
+  xl: 1280px,
+  2xl: 1600px,
+  3xl: 1920px,
+  4xl: 2560px,
+  5xl: 3840px,
 ) !default;
 
+// ====== max-widths for .container
 
-
-
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  2xl: 1440px,
+  3xl: 1680px,
+  4xl: 1920px,
+  5xl: 2560px,
+) !default;
