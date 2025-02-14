@@ -258,5 +258,3 @@ function lds_plugin_deactivation() {
     }
 }
 register_deactivation_hook(__FILE__, 'lds_plugin_deactivation');
-
-?>
