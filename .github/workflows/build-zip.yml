@@ -1,0 +1,26 @@
+name: Build ZIP on Push
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Rimuovere file inutili
+        run: rm -rf .git .github README.md .gitignore
+
+      - name: Creare il file ZIP
+        run: zip -r logical-design-system.zip ./*
+
+      - name: Salvare lo ZIP come Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: logical-design-system
+          path: logical-design-system.zip

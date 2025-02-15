@@ -1,5 +1,9 @@
 // custom.scss
 
+/* variable usage example
+    background-color: var(--primary-dark);
+*/
+
 /* Fadein animation */
 @keyframes fadein {
     from {
@@ -16,6 +20,10 @@ body {
 
 .row>* {
     opacity: 0;
+}
+
+footer .row>* {
+    opacity: 1;
 }
 
 .transition {

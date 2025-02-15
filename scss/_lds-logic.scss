@@ -5,16 +5,12 @@
 // =========================
 
 // Scale names (above base)
-$scale-names-above-base: (
-  'base', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl', '8xl', '9xl'
-) !global;
+$scale-names-above-base: ('base', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl', '8xl', '9xl') !global;
 
 // Scale names (below base)
-$scale-names-below-base: (
-  'xs', 'sm'
-) !global;
+$scale-names-below-base: ('xs', 'sm') !global;
 
-// Bootstrap breakpoints (assumes $grid-breakpoints is defined)
+// Bootstrap breakpoints (assume che $grid-breakpoints sia definito)
 $breakpoints: $grid-breakpoints !global;
 
 // Power function
@@ -32,8 +28,8 @@ $breakpoints: $grid-breakpoints !global;
   @return $result;
 }
 
-// Responsive base font-size mixin (applied to html)
-// Uses baseSize and incrementFactor from settings map
+// Responsive base font-size mixin (applicato a html)
+// Utilizza baseSize e incrementFactor dalla mappa delle impostazioni
 @mixin generateResponsiveBaseFontSize($settings-map) {
   $baseSize: map-get($settings-map, baseSize);
   $incrementFactor: map-get($settings-map, incrementFactor);
@@ -43,7 +39,7 @@ $breakpoints: $grid-breakpoints !global;
   }
 
   @each $bp-name, $bp-value in $breakpoints {
-    // Current breakpoint index (starting at 0)
+    // Calcola l'indice del breakpoint (a partire da 0)
     $index: index(map-keys($breakpoints), $bp-name) - 1;
     $size: $baseSize * pow($incrementFactor, $index + 1);
     $size: round($size * 1000) / 1000;
@@ -56,23 +52,20 @@ $breakpoints: $grid-breakpoints !global;
   }
 }
 
-// Use paragraph settings for global font-size
-@include generateResponsiveBaseFontSize(map-get($BaseSettings, paragraph));
-
-// Generate typographic scale
+// Genera la scala tipografica
 @function generateTypographicScale($baseFontSize, $ratio, $scaleNamesAboveBase, $scaleNamesBelowBase) {
   $scale: ();
 
-  // Sizes at and above base
+  // Dimensioni uguali o superiori alla base
   @for $i from 0 through length($scaleNamesAboveBase) - 1 {
     $size: $baseFontSize * pow($ratio, $i);
     $size: round($size * 1000) / 1000;
-    // Name is 'base' if $i is 0; otherwise, use next name
+    // Se $i è 0 il nome è 'base', altrimenti prendi il nome dalla lista
     $scale-name: if($i == 0, 'base', nth($scaleNamesAboveBase, $i + 1));
     $scale: map-merge($scale, ($scale-name: $size));
   }
 
-  // Sizes below base
+  // Dimensioni inferiori alla base
   @for $i from 1 through length($scaleNamesBelowBase) {
     $size: $baseFontSize / pow($ratio, $i);
     $size: round($size * 1000) / 1000;
@@ -83,8 +76,8 @@ $breakpoints: $grid-breakpoints !global;
   @return $scale;
 }
 
-// Typography classes mixin
-// Generates classes: .[prefix].text-[scaleName] and responsive variants
+// Mixin per generare le classi tipografiche
+// Genera classi del tipo .[prefix].text-[scaleName] e varianti responsive
 @mixin createTypographyClasses($scale, $class-prefix) {
   @each $name, $size in $scale {
     .#{$class-prefix}.text-#{$name} {
@@ -103,75 +96,116 @@ $breakpoints: $grid-breakpoints !global;
   }
 }
 
-// Loop through each type in $BaseSettings (e.g. paragraph, heading, caption)
-// Generate typographic scales for each
-@each $type, $settings in $BaseSettings {
-  // Base font-size of 1rem (matches html font-size)
-  $font-scale: generateTypographicScale(1rem, map-get($settings, r), $scale-names-above-base, $scale-names-below-base);
-  @include createTypographyClasses($font-scale, $type);
-}
-
-
-// =========================
-// Color Logic
-// =========================
-
-// Lighten a color by mixing with white
-@function tint-color($color, $percent) {
-  @return mix(white, $color, $percent);
-}
-
-// Darken a color by mixing with black
-@function shade-color($color, $percent) {
-  @return mix(black, $color, $percent);
-}
-
-// Generate a color scale
-@function generate-color-scale($name, $color) {
-  $scale: (
-    "#{$name}-50": tint-color($color, 90%),
-    "#{$name}-100": tint-color($color, 80%),
-    "#{$name}-200": tint-color($color, 60%),
-    "#{$name}-300": tint-color($color, 40%),
-    "#{$name}-400": tint-color($color, 20%),
-    "#{$name}-500": $color,
-    "#{$name}-600": shade-color($color, 20%),
-    "#{$name}-700": shade-color($color, 40%),
-    "#{$name}-800": shade-color($color, 60%),
-    "#{$name}-900": shade-color($color, 80%),
-    "#{$name}-950": shade-color($color, 90%)
-  );
-  
-  @return $scale;
-}
-
-// Generate classes for background, text, border, and fill colors
-@mixin generate-color-classes($color-map) {
-  @each $key, $val in $color-map {
-    .bg-#{$key} {
-      background-color: $val !important;
-    }
-    .text-#{$key} {
-      color: $val !important;
-    }
-    .border-#{$key} {
-      border-color: $val !important;
-    }
-    .fill-#{$key} {
-      fill: $val !important;
+// Mixin per esportare le variabili CSS della tipografia
+@mixin export-typography-variables($type, $scale) {
+  :root {
+    @each $name, $size in $scale {
+      --#{$type}-font-#{$name}: #{$size};
     }
   }
 }
 
-// Fill classes for black and white
+// Ciclo per ogni tipo definito in $BaseSettings (es. paragraph, heading, caption)
+// Genera la scala tipografica, le classi e le variabili CSS
+@each $type, $settings in $BaseSettings {
+  $font-scale: generateTypographicScale(1rem, map-get($settings, r), $scale-names-above-base, $scale-names-below-base);
+  @include createTypographyClasses($font-scale, $type);
+  @include export-typography-variables($type, $font-scale);
+}
+
+// =========================
+// Cromatic Logic
+// =========================
+
+// Definisce i colori globali per white e black (se non già definiti)
+$white: #fcfcfe !default;
+$black: #1e201f !default;
+
+// Funzione per creare un tint (schiarimento) miscelando con il bianco
+@function tint-color($color, $percent) {
+  @return mix($white, $color, $percent);
+}
+
+// Funzione per creare uno shade (scurimento) miscelando con il nero
+@function shade-color($color, $percent) {
+  @return mix($black, $color, $percent);
+}
+
+// Funzione per generare una scala di colori per un determinato nome
+@function generate-color-scale($name, $base-color, $variation-map) {
+  $white-percent: map-get($variation-map, "white");
+  $light-percent: map-get($variation-map, "light");
+  $dark-percent: map-get($variation-map, "dark");
+  $black-percent: map-get($variation-map, "black");
+
+  $scale: (
+    "#{$name}-white": if($white-percent, tint-color($base-color, $white-percent), null),
+    "#{$name}-light": if($light-percent, tint-color($base-color, $light-percent), null),
+    "#{$name}": $base-color,
+    "#{$name}-dark": if($dark-percent, shade-color($base-color, $dark-percent), null),
+    "#{$name}-black": if($black-percent, shade-color($base-color, $black-percent), null)
+  );
+
+  @return $scale;
+}
+
+// Mixin per generare le classi per background, testo, bordo e fill
+@mixin generate-color-classes($colors, $variations) {
+  @each $name, $base-color in $colors {
+    $variation-map: map-get($variations, $name);
+
+    @if $variation-map == null {
+      @warn "Nessuna variazione trovata per '#{$name}'.";
+    } @else {
+      $scale: generate-color-scale($name, $base-color, $variation-map);
+
+      @each $variant-name, $color-value in $scale {
+        @if $color-value != null {
+          .bg-#{$variant-name} {
+            background-color: $color-value !important;
+          }
+          .text-#{$variant-name} {
+            color: $color-value !important;
+          }
+          .border-#{$variant-name} {
+            border-color: $color-value !important;
+          }
+          .fill-#{$variant-name} {
+            fill: $color-value !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mixin per esportare le variabili CSS dei colori
+@mixin export-color-variables($colors, $variations) {
+  :root {
+    @each $name, $base-color in $colors {
+      $variation-map: map-get($variations, $name);
+      @if $variation-map != null {
+        $scale: generate-color-scale($name, $base-color, $variation-map);
+        @each $variant, $value in $scale {
+          @if $value != null {
+            --#{$variant}: #{$value};
+          }
+        }
+      }
+    }
+  }
+}
+
 .fill-black {
-  fill: $black;
+  fill: $black !important;
 }
-
 .fill-white {
-  fill: $white;
+  fill: $white !important;
 }
 
+// Genera le classi per i colori e esporta le variabili CSS
+@include generate-color-classes($my-colors, $my-colors-variations);
+@include export-color-variables($my-colors, $my-colors-variations);
 
 // =========================
 // Containers & Breakpoints

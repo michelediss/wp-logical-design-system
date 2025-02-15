@@ -4,7 +4,6 @@
 
 // ====== typographic scale
 
-// paragraph parameters
 $BaseSettings: (
   paragraph: (
     baseSize: 16,
@@ -29,14 +28,19 @@ $black: #1e201f;
 $white: #fcfcfe;
 
 $my-colors: (
-  "gray": #6b7280,
-  "red": #f05252,
-  "yellow": #c27803,
-  "green": #0e9f6e,
-  "blue": #3f83f8,
-  "indigo": #6875f5,
-  "purple": #9061f9,
-  "pink": #e74694,
+  "primary": #f05252,
+  "secondary": #c27803,
+  "tertiary": #0e9f6e,
+  "accent": #3f83f8,
+  "gray": #6b7280
+);
+
+$my-colors-variations: (
+  "primary": ( "white": 90, "light": 60, "dark": 60, "black": 90 ),
+  "secondary": ( "white": 90, "light": 60, "dark": 60, "black": 90 ),
+  "tertiary": ( "white": 90, "light": 60, "dark": 60, "black": 90 ),
+  "accent": ( "white": 90, "light": 60, "dark": 60, "black": 90 ),
+  "gray": ( "white": 90, "light": 60, "dark": 60, "black": 90 )
 );
 
 // ====== breakpoints
