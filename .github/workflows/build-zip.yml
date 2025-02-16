@@ -1,26 +1,44 @@
-name: Build ZIP on Push
+name: Build and Release WordPress Plugin
 
 on:
   push:
     branches:
       - master
 
+permissions:
+  contents: write  
+
 jobs:
-  build:
+  build_and_release:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Rimuovere file inutili
-        run: rm -rf .git .github README.md .gitignore
+      - name: Creare directory con il nome corretto e copiare i file
+        run: |
+          mkdir -p build/${{ github.event.repository.name }}
+          rsync -a . build/${{ github.event.repository.name }} --exclude='.git' --exclude='.github' --exclude='README.md' --exclude='.gitignore'
 
-      - name: Creare il file ZIP
-        run: zip -r logical-design-system.zip ./*
+      - name: Creare il file ZIP del tema con cartella principale
+        run: |
+          cd build
+          zip -r ../${{ github.event.repository.name }}.zip ${{ github.event.repository.name }}
+          cd ..
+      
+      - name: Pulizia della directory temporanea
+        run: rm -rf build
 
-      - name: Salvare lo ZIP come Artifact
-        uses: actions/upload-artifact@v4
+      - name: Creare una GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
         with:
-          name: logical-design-system
-          path: logical-design-system.zip
+          tag_name: v1.0.${{ github.run_number }}
+          name: "Release v1.0.${{ github.run_number }}"
+          body: "Nuova release del tema WordPress generata automaticamente."
+          draft: false
+          prerelease: false
+          files: ${{ github.event.repository.name }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
